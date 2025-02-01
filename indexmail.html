@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enhanced Dashboard</title>
+    <link rel="stylesheet" href="stylesmail.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+</head>
+
+<body class="light-mode">
+
+    <!-- Mode Toggle Button -->
+    <button class="toggle-mode" onclick="toggleMode()">Switch to Dark Mode</button>
+
+    <!-- Home Section -->
+    <div class="home-container" id="home">
+        <h1>Welcome to the Enhanced Dashboard</h1>
+        <p>Select an action:</p>
+        <div class="button-group">
+            <button class="primary-btn" onclick="showSection('add-data')">Add Data</button>
+            <button class="primary-btn" onclick="showSection('show-data')">View Data</button>
+            <button class="primary-btn" onclick="exportToExcel()">Export to Excel</button>
+            <button class="send-btn" onclick="showSendPopup()">Send Data</button>
+        </div>
+    </div>
+
+    <!-- Add Data Section -->
+    <div class="container" id="add-data">
+        <h1>Add New Data</h1>
+        <div class="form-container">
+            <label for="name">Name:</label>
+            <input type="text" id="name" placeholder="Enter Name">
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" placeholder="Enter Email Address">
+
+            <label for="contact">Contact:</label>
+            <input type="text" id="contact" placeholder="Enter Contact Number">
+
+            <label for="product">Product:</label>
+            <input type="text" id="product" placeholder="Enter Product Name">
+
+            <label for="unit">Unit:</label>
+            <input type="text" id="unit" value="PCS">
+
+            <label for="qty">Quantity:</label>
+            <input type="number" id="qty" placeholder="Enter Quantity" oninput="calculateAmount()">
+
+            <label for="rate">Rate:</label>
+            <input type="number" id="rate" placeholder="Enter Rate per Unit" oninput="calculateAmount()">
+
+            <label for="amount">Amount:</label>
+            <input type="text" id="amount" readonly>
+
+            <label for="sgst1">SGST (%):</label>
+            <input type="number" id="sgst1" value="9" oninput="calculateTaxes()">
+
+            <label for="sgst2">SGST Amount:</label>
+            <input type="text" id="sgst2" readonly>
+
+            <label for="cgst1">CGST (%):</label>
+            <input type="number" id="cgst1" value="9" oninput="calculateTaxes()">
+
+            <label for="cgst2">CGST Amount:</label>
+            <input type="text" id="cgst2" readonly>
+
+            <label for="igst1">IGST (%):</label>
+            <input type="number" id="igst1" value="0" oninput="calculateTaxes()">
+
+            <label for="igst2">IGST Amount:</label>
+            <input type="text" id="igst2" readonly>
+
+            <div class="button-container">
+                <button class="primary-btn" onclick="submitData()">Submit</button>
+                <button class="secondary-btn" onclick="showSection('home')">Back to Home</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Show Data Section -->
+    <div class="container" id="show-data">
+        <h1>Data Records</h1>
+        <div class="table-container">
+            <table id="data-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Contact</th>
+                        <th>Product</th>
+                        <th>Unit</th>
+                        <th>Quantity</th>
+                        <th>Rate</th>
+                        <th>Amount</th>
+                        <th>SGST</th>
+                        <th>SGST Amount</th>
+                        <th>CGST</th>
+                        <th>CGST Amount</th>
+                        <th>IGST</th>
+                        <th>IGST Amount</th>
+                        <th>Date Entered</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Dynamically added rows will appear here -->
+                </tbody>
+            </table>
+        </div>
+        <button class="secondary-btn" onclick="showSection('home')">Back to Home</button>
+    </div>
+
+    <!-- Send Data Modal -->
+    <div class="modal" id="send-modal">
+        <div class="modal-content">
+            <h2>Send Data</h2>
+            <p>Your data is ready to be sent.</p>
+            <button class="primary-btn" onclick="sendData()">Send</button>
+            <button class="secondary-btn" onclick="closeSendPopup()">Cancel</button>
+        </div>
+    </div>
+
+    <script src="scriptmail.js"></script>
+
+</body>
+
+<script type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+</script>
+<script type="text/javascript">
+   (function(){
+      emailjs.init({
+        publicKey: "84xV1GxS3opiSJ1VV",
+      });
+   })();
+</script>
+
+</html>
